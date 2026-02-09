@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nav-link {
+    @apply text-gray-700 transition-all duration-200 font-medium text-sm;
+    position: relative;
+
+    &:hover {
+      color: #2E1A5E;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, #2E1A5E, #E91E63);
+      transform: translateX(-50%);
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 80%;
+    }
+  }
+}
+
+/* Smooth animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.animate-in {
+  animation: fadeInDown 0.3s ease;
+}
+
+/* Backdrop and modal animations */
+@layer components {
+  .modal-backdrop {
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal-content {
+    animation: scaleIn 0.3s ease;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus states for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #E91E63;
+  outline-offset: 2px;
+}
+
+/* Gradient text animation */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Floating animation for blobs */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-pulse {
+  animation: gradientShift 4s ease infinite;
+  background-size: 200% 200%;
+}
