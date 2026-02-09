@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   ShieldCheck, Zap, Building2, GraduationCap, 
-  Truck, Factory, Users, MapPin, Heart, Target, ArrowRight
+  Truck, Factory, Users, MapPin, Heart, Target
 } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import life1 from '../../assets/serviceslife/life1.jpg';
@@ -295,30 +295,6 @@ export default function About() {
             <ClientTile index={5} icon={Building2} label="Government Entities" />
             <ClientTile index={6} icon={Users} label="Organized Individual Groups" />
             <ClientTile index={7} icon={Heart} label="Families & Individuals" />
-          </div>
-        </div>
-      </section>
-
-      {/* 7. CALL TO ACTION */}
-      <section className="relative py-24 bg-[#2E1A5E] overflow-hidden">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        {/* Abstract Background Shapes */}
-        <div className="absolute -top-16 -left-16 w-96 h-96 bg-gradient-to-tr from-[#E91E63] to-[#2E1A5E] rounded-full opacity-20 blur-3xl"></div>
-        <div className="absolute -bottom-16 -right-16 w-96 h-96 bg-gradient-to-tl from-[#E91E63] to-[#2E1A5E] rounded-full opacity-20 blur-3xl"></div>
-        
-        <div className="relative z-10">
-          <h2 className="text-3xl font-bold text-white mb-6 text-center">Ready to Get Started?</h2>
-          <p className="text-slate-300 text-center max-w-2xl mx-auto mb-10">
-            Contact us today for a free consultation and personalized insurance solutions.
-          </p>
-          <div className="flex justify-center">
-            <Link to="/contact">
-              <button className="bg-[#E91E63] hover:bg-[#d81557] text-white px-10 py-4 rounded-2xl font-bold text-base transition-all shadow-xl shadow-pink-500/20 active:scale-95 flex items-center gap-3 group">
-                Contact Us Now
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </Link>
           </div>
         </div>
       </section>
