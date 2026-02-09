@@ -38,6 +38,13 @@ export default function HeroSection() {
             object-position: right bottom;
           }
         }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
       `}
     </style>
     <section className="relative w-full min-h-[500px] lg:min-h-[450px] lg:h-[55vh] flex items-center pt-8 lg:pt-0 overflow-hidden bg-[#2E1A5E]">
@@ -116,8 +123,8 @@ export default function HeroSection() {
       </div>
 
       {/* Bottom Checklist Row */}
-      <div className="absolute bottom-8 left-0 right-0 z-30 px-4 sm:px-6 lg:px-8 flex justify-center lg:justify-start pointer-events-none">
-        <div className="flex flex-row flex-wrap justify-center lg:justify-start gap-6 md:gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-[1200ms] fill-mode-both pointer-events-auto">
+      <div className="absolute bottom-8 left-0 right-0 z-30 px-4 sm:px-6 lg:px-8 flex justify-start pointer-events-none">
+        <div className="flex flex-row items-center justify-start gap-6 md:gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-[1200ms] fill-mode-both pointer-events-auto overflow-x-auto scrollbar-hide">
           {benefits.map((benefit, idx) => (
             <div key={idx} className="flex items-center gap-2 group/item">
               <div className="w-1 h-1 bg-[#E91E63] rounded-full shadow-[0_0_8px_#E91E63]"></div>

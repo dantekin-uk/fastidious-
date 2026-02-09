@@ -133,6 +133,11 @@ const ScrollableServiceGroup = ({ title, desc, items, id, index, scrollState, on
           </motion.div>
 
           <div className="w-full lg:w-2/3 relative group">
+            {/* Mobile Swipe Hint */}
+            <div className="flex md:hidden items-center justify-center gap-2 mb-4 text-slate-400 animate-pulse">
+              <span className="text-[10px] font-bold uppercase tracking-widest">Swipe to explore</span>
+              <ChevronRight size={14} className="animate-bounce-x" />
+            </div>
             <motion.div
               id={`scroll-${id}`}
               onScroll={onScroll}
@@ -241,6 +246,24 @@ export default function Services() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
+      <style>
+        {`
+          @keyframes bounce-x {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+          }
+          .animate-bounce-x {
+            animation: bounce-x 1s infinite;
+          }
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+          .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}
+      </style>
       {/* Hero Section - Modern & Compact */}
       <motion.div
         className="relative text-white py-16 md:py-20 overflow-hidden border-b border-gray-100 min-h-[400px] md:min-h-[450px] lg:h-[55vh] flex items-center justify-center md:justify-start"
