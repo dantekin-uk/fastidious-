@@ -6,6 +6,8 @@ import Services from '../components/Services'
 import BlogParallax from '../components/BlogParallax'
 import WhyChooseUs from '../components/WhyChooseUs'
 import Testimonials from '../components/Testimonials'
+import Stats from '../components/Stats'
+import FAQ from '../components/FAQ'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 export default function Home() {
@@ -19,7 +21,8 @@ export default function Home() {
       <BlogParallax />
       <WhyChooseUs />
       <Testimonials />
-
+      <Stats />
+      <FAQ />
     </div>
   )
 }

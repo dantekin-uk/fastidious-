@@ -150,17 +150,17 @@ export default function About() {
       </motion.div>
 
       {/* 2. OUR STORY */}
-      <section id="our-story" ref={storyRef} className="py-24 bg-white relative overflow-hidden">
+      <section id="our-story" ref={storyRef} className="py-16 md:py-24 bg-white relative overflow-hidden">
         {/* Subtle Background Decor */}
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-[#E91E63]/5 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             
             {/* LEFT: THE STORY */}
-            <div className={`space-y-8 relative z-10 transition-all duration-1000 ${storyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
-              <div>
-                <h2 className="text-3xl font-bold text-[#2E1A5E] mb-6">Our Story</h2>
-                <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
+            <div className={`space-y-6 md:space-y-8 relative z-10 transition-all duration-1000 ${storyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-y-8 md:-translate-x-12'}`}>
+              <div className="text-center md:text-left">
+                <h2 className="text-2xl md:text-3xl font-bold text-[#2E1A5E] mb-4 md:mb-6">Our Story</h2>
+                <div className="space-y-4 md:space-y-6 text-slate-600 text-base md:text-lg leading-relaxed">
               
                   <p>
                     We offer competitive market rates and tailor policies, saving you time on comparisons. We are also keen on building relationships with our clients as life changes.
@@ -168,13 +168,13 @@ export default function About() {
                   <p>
                     With deep local knowledge, we make insurance simple, accessible, and reliable for our clients.
                   </p>
-                  <p className="border-l-4 border-[#E91E63] pl-6 italic">
+                  <p className="border-l-4 border-[#E91E63] pl-4 md:pl-6 italic text-slate-500">
                     "Our goal is to bridge protection gaps in the Kenyan market by partnering with leading insurers."
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 pt-4">
+              <div className="flex items-center justify-center md:justify-start gap-4 pt-2 md:pt-4">
                 <div className="bg-slate-50 border border-slate-100 px-6 py-3 rounded-xl flex items-center gap-3">
                    <MapPin className="text-[#E91E63]" size={20} />
                    <div>
@@ -186,13 +186,13 @@ export default function About() {
             </div>
 
             {/* RIGHT: MODERN IMAGE (Visual Trust) */}
-            <div className={`w-full relative transition-all duration-1000 delay-300 ${storyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
+            <div className={`w-full relative transition-all duration-1000 delay-300 ${storyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-y-8 md:translate-x-12'}`}>
               {/* Decorative elements */}
-              <div className="absolute top-8 -right-8 w-full h-full bg-gradient-to-br from-[#E91E63]/15 via-[#2E1A5E]/5 to-transparent rounded-[3rem] -z-10 blur-xl"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[#E91E63]/20 rounded-full blur-2xl -z-10"></div>
+              <div className="absolute top-4 md:top-8 -right-4 md:-right-8 w-full h-full bg-gradient-to-br from-[#E91E63]/15 via-[#2E1A5E]/5 to-transparent rounded-[2rem] md:rounded-[3rem] -z-10 blur-xl"></div>
+              <div className="absolute -bottom-4 -left-4 w-24 md:w-32 h-24 md:h-32 bg-[#E91E63]/20 rounded-full blur-2xl -z-10"></div>
 
               {/* Main Image Container */}
-              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/30 backdrop-blur-sm aspect-[4/3] group">
+              <div className="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/30 backdrop-blur-sm aspect-[4/3] group">
                 <img
                   src={commercial1}
                   alt="Our Story"

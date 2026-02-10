@@ -1,52 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { Car, Heart, Briefcase, Users, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { servicesData } from '../data/services';
+
+// Import images
+const motorImg = servicesData.find(s => s.id === 'travel-insurance')?.image;
+const healthImg = servicesData.find(s => s.id === 'group-funeral-expense')?.image;
+const businessImg = servicesData.find(s => s.id === 'engineering')?.image;
+const lifeImg = servicesData.find(s => s.id === 'individual-pension-plans')?.image;
 
 const Services = () => {
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.3 });
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.1 });
-  const [relativeScroll, setRelativeScroll] = useState(0);
+
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const handleScroll = () => {
+    if (cardsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = cardsRef.current;
+      const progress = scrollWidth > clientWidth ? (scrollLeft / (scrollWidth - clientWidth)) * 100 : 0;
+      setScrollProgress(progress);
+      setCanScrollLeft(scrollLeft > 20);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 20);
+    }
+  };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (headerRef.current) {
-        const rect = headerRef.current.getBoundingClientRect();
-        setRelativeScroll(rect.top);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [headerRef]);
+    const el = cardsRef.current;
+    if (el) {
+      el.addEventListener('scroll', handleScroll);
+      const timer = setTimeout(handleScroll, 100);
+      window.addEventListener('resize', handleScroll);
+      return () => {
+        el.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleScroll);
+        clearTimeout(timer);
+      };
+    }
+  }, [cardsRef]);
+
+  const scroll = (direction) => {
+    if (cardsRef.current) {
+      const { clientWidth } = cardsRef.current;
+      // Scroll by one card width based on the new percentages
+      const scrollAmount = window.innerWidth >= 1024 ? clientWidth * 0.32 : clientWidth * 0.78;
+      cardsRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   const services = [
     {
-      icon: Car,
-      title: "Motor & Travel",
+      title: "Motor & Travel Insurance",
       desc: "Comprehensive coverage for your vehicle and peace of mind during your travels.",
-      color: "text-blue-600",
-      bg: "bg-blue-50"
+      image: motorImg,
+      category: "Personal"
     },
     {
-      icon: Heart,
-      title: "Medical Health",
+      title: "Medical & Health Cover",
       desc: "Inpatient and outpatient covers tailored for individuals, families, and seniors.",
-      color: "text-pink-600",
-      bg: "bg-pink-50"
+      image: healthImg,
+      category: "Life"
     },
     {
-      icon: Briefcase,
-      title: "Business / SME",
+      title: "Business & SME Solutions",
       desc: "Protect your assets with WIBA, Fire & Perils, and Liability coverage.",
-      color: "text-purple-600",
-      bg: "bg-purple-50"
+      image: businessImg,
+      category: "Commercial"
     },
     {
-      icon: Users,
-      title: "Life & Pensions",
+      title: "Life & Retirement Plans",
       desc: "Secure your future with education policies, funeral expense, and retirement plans.",
-      color: "text-orange-600",
-      bg: "bg-orange-50"
+      image: lifeImg,
+      category: "Life"
     }
   ];
 
@@ -54,28 +83,6 @@ const Services = () => {
     <section id="services-section" className="py-24 md:py-32 relative overflow-hidden">
       <style>
         {`
-          @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-          }
-          .animate-gradient {
-            animation: gradientShift 6s ease infinite;
-          }
-          @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-          }
-          .animate-float {
-            animation: float 3s ease-in-out infinite;
-          }
-          @keyframes blobFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -80px) scale(1.2); }
-            66% { transform: translate(-30px, 40px) scale(0.8); }
-          }
-          .animate-blob-slow {
-            animation: blobFloat 25s infinite alternate ease-in-out;
-          }
           .scrollbar-hide::-webkit-scrollbar {
             display: none;
           }
@@ -112,74 +119,94 @@ const Services = () => {
         {/* Section Header with scroll animations and parallax */}
         <div 
           ref={headerRef} 
-          className={`text-center mb-20 md:mb-28 max-w-4xl mx-auto transition-all duration-1000 ${headerVisible ? 'opacity-100 scale-100' : 'opacity-0 translate-y-20 scale-95'}`}
-    
-          style={{ transform: headerVisible ? `translateY(${relativeScroll * 0.06}px)` : undefined }}
+          className={`text-center mt-8 md:mt-12 mb-4 md:mb-6 max-w-4xl mx-auto transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
-          {/* <span className="text-[#E91E63] font-bold tracking-[0.4em] uppercase text-[10px] md:text-xs mb-6 block">Our Expertise</span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-[#2E1A5E] tracking-tight leading-[1.1]">
-          <span className="text-[#E91E63] font-bold tracking-[0.4em] uppercase text-[10px] md:text-xs mb-4 block">Our Expertise</span> */}
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2E1A5E] leading-tight tracking-tight">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#2E1A5E] leading-tight tracking-tight">
             Explore recommended products
           </h2>
-          <p className={`text-sm md:text-base text-slate-600 mt-6 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-300 ${headerVisible ? 'opacity-100' : 'opacity-0 translate-y-10'}`}>
-            Tailored insurance plans designed for your lifestyle and business.
-          </p>
         </div>
 
         {/* Mobile Swipe Hint */}
-        <div className="flex md:hidden items-center justify-center gap-2 mb-8 text-slate-400 animate-pulse">
+        <div className="flex md:hidden items-center justify-center gap-2 mb-4 text-slate-400 animate-pulse">
           <span className="text-[10px] font-bold uppercase tracking-widest">Swipe to explore</span>
-          <ArrowRight size={14} className="animate-bounce-x" />
+          <ArrowRight size={14} className="animate-bounce-x ml-2" />
         </div>
 
-        {/* 4 CARDS IN A ROW */}
-        <div 
-          ref={cardsRef} 
-          className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 pb-8 md:pb-0 scrollbar-hide snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0"
-          style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
-        >
+        <div className="relative group/container">
+          {/* Navigation Arrows - Desktop Only */}
+          <div className="hidden lg:block">
+            <button 
+              onClick={() => scroll('left')}
+              className={`absolute -left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl border border-slate-100 transition-all duration-300 hover:bg-white active:scale-95 ${canScrollLeft ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}`}
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="text-[#2E1A5E]" size={24} />
+            </button>
+            <button 
+              onClick={() => scroll('right')}
+              className={`absolute -right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl border border-slate-100 transition-all duration-300 hover:bg-white active:scale-95 ${canScrollRight ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}`}
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="text-[#2E1A5E]" size={24} />
+            </button>
+          </div>
 
-          {services.map((service, index) => {
-            return (
-              <div
-                key={index}
-                className={`flex-shrink-0 w-[85vw] md:w-auto snap-start snap-always group relative bg-white/40 backdrop-blur-2xl rounded-[2.5rem] p-8 md:p-10 border border-white/60 hover:border-white/90 shadow-[0_8px_32px_rgba(46,26,94,0.02)] hover:shadow-[0_30px_70px_rgba(46,26,94,0.12)] transition-all duration-700 hover:-translate-y-4 hover:bg-white/60`}
-                style={{
-                  opacity: cardsVisible ? 1 : 0,
-                  transform: cardsVisible
-                    ? `translateY(${relativeScroll * 0.04}px) translateX(0px) scale(1)`
-                    : index % 2 === 0
-                      ? 'translateY(100px) translateX(-30px) scale(0.9)'
-                      : 'translateY(100px) translateX(30px) scale(0.9)',
-                  transition: `all 1200ms cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 150}ms`,
-                }}
-              >
-                {/* Animated glow on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#E91E63]/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+          {/* 4 CARDS IN A ROW */}
+          <div 
+            ref={cardsRef} 
+            className="flex overflow-x-auto gap-6 md:gap-8 pb-10 scrollbar-hide snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 scroll-smooth"
+            style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+          >
 
-                {/* Icon Bubble with enhanced animation */}
-                <div className={`w-16 md:w-20 h-16 md:h-20 ${service.bg} rounded-2xl md:rounded-3xl flex items-center justify-center mb-8 group-hover:scale-125 group-hover:-rotate-6 transition-all duration-500 shadow-md group-hover:shadow-xl animate-float`} style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
-                  <service.icon size={40} className={`${service.color} transition-transform duration-500 group-hover:scale-110`} strokeWidth={1.5} />
-                </div>
+            {services.map((service, index) => {
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={cardsVisible ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="flex-shrink-0 w-[75vw] md:w-[calc(45%-1rem)] lg:w-[calc(30%-1.5rem)] snap-start snap-always"
+                >
+                  <Link
+                    to="/services"
+                    className="group relative block h-[320px] rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
+                  >
+                    {/* Background Image */}
+                    <img 
+                      src={service.image} 
+                      alt={service.title} 
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2E1A5E] via-[#2E1A5E]/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                {/* Text */}
-                <h3 className="text-lg md:text-xl font-bold text-[#2E1A5E] mb-3 group-hover:text-[#E91E63] transition-colors duration-300 leading-tight">
-                  {service.title}
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6 group-hover:text-slate-700 transition-colors duration-300">
-                  {service.desc}
-                </p>
+                    {/* Content */}
+                    <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                      <span className="text-[#E91E63] font-bold text-[10px] uppercase tracking-widest mb-2">{service.category}</span>
+                      <h3 className="text-xl font-bold text-white mb-3 leading-tight">{service.title}</h3>
+                      <p className="text-white/70 text-sm leading-relaxed mb-6 line-clamp-2 group-hover:text-white/90 transition-colors">{service.desc}</p>
 
-                {/* Link Arrow with enhanced interaction */}
-                <div className="flex items-center gap-2 text-sm font-bold text-[#2E1A5E] group-hover:gap-4 group-hover:text-[#E91E63] transition-all duration-300 cursor-pointer">
-                  View Plans
-                  <ArrowRight size={18} className="text-[#E91E63] group-hover:translate-x-2 transition-transform duration-300" />
-                </div>
-              </div>
-            );
-          })}
+                      <div className="flex items-center gap-2 text-sm font-bold text-white group-hover:gap-4 transition-all duration-300">
+                        View Plans
+                        <ArrowRight size={18} className="text-[#E91E63] group-hover:translate-x-2 transition-transform duration-300" />
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
+        {/* Progress Bar Indicator */}
+        <div className="max-w-xs mx-auto mt-4 h-1 bg-slate-100 rounded-full overflow-hidden relative">
+          <motion.div 
+            className="absolute top-0 left-0 h-full bg-[#E91E63]"
+            initial={{ width: 0 }}
+            animate={{ width: `${scrollProgress}%` }}
+            transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+          />
         </div>
 
       </div>

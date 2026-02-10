@@ -260,8 +260,8 @@ export default function ServiceDetail() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl font-bold text-[#2E1A5E] mb-4">Explore Other Services</h2>
-              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#2E1A5E] mb-4">Explore Other Services</h2>
+              <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
                 Discover more comprehensive protection options available from our diverse portfolio
               </p>
             </motion.div>

@@ -23,7 +23,7 @@ export default function ServiceDropdown() {
 
   return (
     <div 
-      className="h-12 sm:h-14 flex items-center group"
+      className="h-20 flex items-center group"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
