@@ -3,7 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/fastidious-/',
+  // For most hosts (Netlify, Vercel, custom domain) deploy at domain root:
+  // use base: '/' so built JS/CSS are requested from the correct path.
+  base: '/',
   server: {
     port: 3000,
     host: true
