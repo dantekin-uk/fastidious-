@@ -6,7 +6,7 @@
   "homepage": "https://dantekin-uk.github.io/fastidious-",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/fastidious-/",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
